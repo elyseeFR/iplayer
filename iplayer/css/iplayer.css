@@ -1,0 +1,528 @@
+/*
+iplayer: The free interactive HTML5 player
+https://github.com/elyseeFR/iplayer
+
+Copyright (C) 2014  Frederic Giudicelli - Presidence de la Republique Française
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+*/
+
+body.player {
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background-color: #000;
+}
+
+body.player #playerContainer {
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+
+@media (max-width: 1023px) {
+    body .video-js .vjs-control-bar {
+        font-size: 14px;
+    }
+    body .video-js .popup .vjs-control-bar {
+        font-size: 10px;
+    }
+}
+
+a img {
+    border: 0px none;
+    padding: 0px;
+}
+
+.video-js button,
+.video-js input[type="submit"] {
+    background-color: #0097f7;
+    border: 2px solid #01588f;
+    color: #fff;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 4px 7px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.clear {
+    clear: both;
+}
+
+
+.video-js svg {
+    display: block;
+}
+
+.video-js .overlay_content {
+    font-size: 14px;
+    color: #333;
+}
+
+.video-js .hotspot {
+    position: absolute;
+    z-index: 1000;
+    left: 0px;
+    top: 0px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+}
+
+.video-js .hotspot * {
+    /*
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    */
+}
+
+.video-js .hotspot:hover {
+    z-index: 1001;
+}
+
+.video-js .hotspot:hover .tooltip,
+.video-js .hotspot.paused .tooltip {
+    display: block;
+}
+
+.video-js .tooltip {
+    position: absolute;
+    left: 0px;
+    padding: 3px 7px;
+    background-color: #0097f7;
+    border: 2px solid #01588f;
+    opacity: 0.8;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 100%;
+    text-align: center;
+    display: none;
+    color: #fff;
+    min-width: 100px;
+}
+
+.video-js .popup_overlay {
+    position: absolute;
+    z-index: 3000;
+    left: 0px;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+
+.video-js .popup {
+    background-color: #fff;
+    overflow: hidden;
+    cursor: auto;
+    position: relative;
+    border: 2px solid #01588f;
+
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+
+-webkit-box-shadow: 0 0 20px #000000;
+-moz-box-shadow: 0 0 20px #000000;
+box-shadow: 0 0 20px #000000;
+}
+
+.video-js .popup .title {
+    background-color: #0097f7;
+    padding: 7px 7px;
+    text-align: left;
+    font-size: 180%;
+    font-weight: bold;
+    color: #fff;
+}
+
+.video-js .close {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+}
+
+.video-js .close:hover {
+    text-shadow: 2px 2px 4px #fff;
+}
+
+.video-js .popup_content {
+    padding: 1em;
+    color: #333;
+    font-size: 16px;
+}
+
+.video-js .popup .leftContainer {
+    float: left;
+    margin-right: 17px;
+    margin-bottom: 17px;
+}
+
+.video-js .popup_bottom {
+    position: absolute;
+    bottom: 0px;
+    border-top: 1px solid #01588f;
+    width: 100%;
+}
+
+.video-js .popup_bottom .shares {
+    float: right;
+    padding: 7px;
+}
+
+.video-js .popup_bottom .shares span {
+    display: inline-block;
+    position: relative;
+}
+
+.video-js .popup_bottom .shares strong {
+    color: #01588f;
+    font-size: 22px;
+    position: relative;
+    top: -7px;
+}
+
+.video-js .popup_bottom .share {
+    display: inline-block;
+    margin: 0px 8px;
+}
+
+
+#finalShares {
+    text-align: center;
+    margin: 40px;
+}
+
+#finalShares span {
+    display: inline-block;
+    position: relative;
+    margin-right: 20px;
+}
+
+#finalShares span strong {
+    color: #ffffff;
+    font-size: 40px;
+    position: relative;
+    top: -37px;
+    text-transform: uppercase;
+}
+
+.video-js #finalShares .share img {
+    display: inline-block;
+    margin: 0px 10px;
+    height: 100px;
+}
+
+@media (max-width: 600px) {
+    #finalShares {
+        margin: 0px;
+    }
+    #finalShares span {
+        display: block;
+        margin: 0px 0px 15px 0px;
+        font-size: 20px;
+    }
+    #finalShares span strong {
+        font-size: 30px;
+        top: 0px;
+    }
+    .video-js #finalShares .share img {
+        margin: 0px 10px;
+        height: 60px;
+    }
+}
+
+
+
+body .mCS-dark-thick.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color: #0097f7;
+}
+
+body .mCS-dark-thick.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+    background-color: #01588f;
+}
+
+.video-js .pulsar {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: auto;
+}
+
+.video-js .pulsar .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 1px;
+    height: 1px;
+}
+
+.vjs-default-skin .vjs-hd-control:before {
+  content: "\e00a";
+}
+
+.vjs-default-skin .vjs-hd-control:focus .vjs-control-content:before,
+.vjs-default-skin .vjs-hd-control:hover .vjs-control-content:before {
+  /* box-shadow */
+  -webkit-box-shadow: 0 0 1em #ffffff;
+  -moz-box-shadow: 0 0 1em #ffffff;
+  box-shadow: 0 0 1em #ffffff;
+}
+
+.vjs-default-skin .vjs-hd-control {
+    float: right;
+}
+
+.video-js #header {
+    z-index: 1003;
+    position: absolute;
+    background-color: rgba(7, 20, 30, 0.7);
+    width: 100%;
+-webkit-box-shadow: 0 0 2px #ffffff;
+-moz-box-shadow: 0 0 2px #ffffff;
+box-shadow: 0 0 2px #ffffff;
+}
+
+.vjs-default-skin.vjs-has-started #header {
+  display: block;
+  /* Visibility needed to make sure things hide in older browsers too. */
+
+  visibility: visible;
+  opacity: 1;
+  /* transition */
+  -webkit-transition: visibility 0.1s, opacity 0.1s;
+  -moz-transition: visibility 0.1s, opacity 0.1s;
+  -o-transition: visibility 0.1s, opacity 0.1s;
+  transition: visibility 0.1s, opacity 0.1s;
+}
+/* Hide the control bar when the video is playing and the user is inactive  */
+.vjs-default-skin.vjs-has-started.vjs-user-inactive.vjs-playing #header {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  /* transition */
+  -webkit-transition: visibility 1s, opacity 1s;
+  -moz-transition: visibility 1s, opacity 1s;
+  -o-transition: visibility 1s, opacity 1s;
+  transition: visibility 1s, opacity 1s;
+}
+
+
+.video-js #header .controls {
+    position: absolute;
+    left: 30%;
+    top: 5px;
+}
+
+@media (max-width: 1023px) {
+    .video-js #header .controls {
+        left: 55px;
+    }
+}
+
+
+.video-js #header .controls button,
+.video-js #header .controls input[type="submit"],
+#replayVideo button {
+    margin: 0px 6px;
+    font-size: 13px;
+    line-height: 13px;
+    color: #fff;
+    padding: 10px 10px 8px 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid #fff;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.video-js #header .controls form {
+    display: inline;
+}
+
+#finalPopup .popup_content {
+    position: relative;
+}
+
+#replayVideo {
+    position: absolute;
+    bottom: 45px;
+    text-align: center;
+    width: 100%;
+}
+
+#replayVideo button {
+    background-color: #ffffff;
+    color: #0097f7;
+}
+
+#finalPopup .popup {
+    background-color: #0097f7;
+}
+
+.video-js #header .controls button.selectedQuality {
+    color: #333333;
+    background-color: #ffffff;
+    cursor: default;
+}
+
+.video-js #header .shares {
+    float-right;
+    padding: 6px 4px 0px 0px;
+}
+
+.video-js #header .share {
+    float: right;
+    display: block;
+    margin: 0px 8px;
+}
+
+.video-js .logo {
+    display: block;
+    margin: 4px 0px 0px 6px;
+    float: left;
+}
+
+.video-js .logo img,
+.video-js img.logo {
+    height: 36px;
+}
+
+.video-js .share img {
+    height: 32px;
+}
+
+.video-js .map_overlay {
+    position: absolute;
+    z-index: 3000;
+    left: 0px;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.video-js .map {
+    box-shadow: 0 0 20px #000;
+    border: 2px solid #01588f;
+    overflow: hidden;
+    cursor: auto;
+
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+}
+
+.video-js .mapimage {
+    overflow: hidden;
+    background-color: #fff;
+    position: relative;
+}
+
+.video-js .mapcontainer {
+    position: relative;
+}
+
+.video-js .mapfullimage {
+    display: block;
+}
+
+.video-js .maptitle {
+    background-color: #0097f7;
+    padding: 7px;
+}
+
+.video-js .maptitle .title {
+    font-size: 22px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    /*width: 100%;*/
+    margin-right: 25px;
+    text-shadow: 2px 2px 4px #01588f;
+}
+
+.video-js .maptitle .close {
+    font-size: 180%;
+}
+
+.video-js .mapzoom {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 20%;
+    z-index: 1001;
+}
+
+.video-js .map .tooltip {
+    opacity: 1;
+}
+
+
+#debug {
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid black;
+    position: absolute;
+    z-index: 100000;
+    right: 10px;
+    top: 10px;
+}
+
+.movable {
+    cursor: move;
+}
+
+
+.iPad .video-js .vjs-fullscreen-control {
+    display: none;
+}
+
+
+
+#exportPopup .popup_content {
+    font-size: 20px;
+}
+
+#exportPopup input {
+    padding: 10px;
+    font-size: 20px;
+}
+
+#exportField {
+    margin-bottom: 30px;
+}
+
+#exportPopup textarea {
+    width: 98%;
+    font-size: 30px;
+    padding: 10px;
+}
+

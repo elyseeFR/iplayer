@@ -1,0 +1,123 @@
+/*
+iplayer: The free interactive HTML5 player
+https://github.com/elyseeFR/iplayer
+
+Copyright (C) 2014  Frederic Giudicelli - Presidence de la Republique Française
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+*/
+
+body {
+    margin:0;
+    padding:0;    
+}
+
+#main_container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+label {
+    font-weight: bold;
+    display: inline-block;
+    width: 308px;
+}
+
+input[type="text"] {
+    width: 400px;
+}
+
+textarea {
+    width: 400px;
+}
+
+
+#template,
+#projectJSON {
+    width: 100%;
+    height: 320px;
+}
+
+#hotspots,
+#popups,
+#frames {
+    padding: 1em;
+}
+
+#hotspots {
+    margin-bottom: 1em;
+}
+
+#hotspots li,
+#popups li,
+#frames li {
+    cursor: pointer;
+}
+
+#hotspot_form button,
+#popup_form button,
+#frame_form button {
+    position: absolute; 
+    top: -1000px;
+}
+
+#popuptest {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#main_video {
+    margin: 10px auto;
+}
+
+.vjs-default-skin .vjs-control-bar {
+    z-index: 3;
+}
+
+#video_grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: url(../images/grid.png) left top repeat;
+    background-size: 40px;
+    opacity: 0.3;
+}
+
+.testplayer #video_grid {
+    display: none;
+}
+
+
+body .video-js .hotspot {
+    z-index: 1;
+}
+
+body .vjs-default-skin .vjs-big-play-button {
+    z-index: 4;
+}
+
+
+.reddot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background-color: #ff0000;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+}
