@@ -60,7 +60,7 @@ function FinalPopup(options, player) {
             return;
         }
         
-        $('#finalShares').append('<span><strong>Partager cette vidéo : </strong></span>');
+        $('#finalShares').append('<span><strong>'+_t('SHARE_VIDEO')+' : </strong></span>');
     
         var text = options['general']['shareText'];
         
@@ -92,8 +92,8 @@ function FinalPopup(options, player) {
         if(options['general']['twitterHashtag'])
             twitterLink += '&hashtags='+encodeURIComponent(options['general']['twitterHashtag']);
             
-        $('#finalShares').append('<a target="_blank" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook-big.png" alt="Partager sur Facebook" /></a>');
-        $('#finalShares').append('<a target="_blank" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter-big.png" alt="Partager sur Twitter" /></a>');
+        $('#finalShares').append('<a target="_blank" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook-big.png" alt="'+_t('SHARE_FB')+'" /></a>');
+        $('#finalShares').append('<a target="_blank" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter-big.png" alt="'+_t('SHARE_TW')+'" /></a>');
 
         me.obj.find('.popup_bottom a.twitter').click(function() {
             if(_gaq) {
@@ -113,7 +113,7 @@ function FinalPopup(options, player) {
     }
 
     this.build = function() {
-        player.obj.append('<div id="finalPopup" class="popup_overlay"><div class="popup"><div class="popup_content"><div id="finalShares"></div><div id="replayVideo"><button>Rejouer cette vidéo</button></div></div></div></div>');
+        player.obj.append('<div id="finalPopup" class="popup_overlay"><div class="popup"><div class="popup_content"><div id="finalShares"></div><div id="replayVideo"><button>'+_t('REPLAY')+'</button></div></div></div></div>');
         me.obj = $('#finalPopup');
         
         me.buildContent();

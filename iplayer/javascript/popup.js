@@ -166,7 +166,7 @@ function Popup(config, hotspot, player, options) {
         if(config['hideBottom'])
             return;
 
-        me.obj.find('.popup').append('<div class="popup_bottom"><div class="shares"><span><strong>Partager ce contenu : </strong></span></div><div class="clear"></div></div>');
+        me.obj.find('.popup').append('<div class="popup_bottom"><div class="shares"><span><strong>'+_t('SHARE_CONTENT')+' : </strong></span></div><div class="clear"></div></div>');
     
         var text = options['general']['shareText'] + ': '+ config.title;
         
@@ -198,8 +198,8 @@ function Popup(config, hotspot, player, options) {
         if(options['general']['twitterHashtag'])
             twitterLink += '&hashtags='+encodeURIComponent(options['general']['twitterHashtag']);
             
-        me.obj.find('.popup_bottom .shares').append('<a target="_blank" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook.png" alt="Partager sur Facebook" /></a>');
-        me.obj.find('.popup_bottom .shares').append('<a target="_blank" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter.png" alt="Partager sur Twitter" /></a>');
+        me.obj.find('.popup_bottom .shares').append('<a target="_blank" title="'+_t('SHARE_FB')+'" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook.png" alt="'+_t('SHARE_FB')+'" /></a>');
+        me.obj.find('.popup_bottom .shares').append('<a target="_blank" title="'+_t('SHARE_TW')+'" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter.png" alt="'+_t('SHARE_TW')+'" /></a>');
 
         me.obj.find('.popup_bottom a.twitter').click(function() {
             if(_gaq) {
@@ -219,7 +219,7 @@ function Popup(config, hotspot, player, options) {
     }
 
     this.build = function() {
-        player.obj.append('<div id="'+config.name+'" class="popup_overlay"><div class="popup"><div class="title">'+config.title+'<div title="Fermer" class="close">X</div><div class="clear"></div></div><div class="popup_content"></div></div></div>');
+        player.obj.append('<div id="'+config.name+'" class="popup_overlay"><div class="popup"><div class="title">'+config.title+'<div title="'+_t('CLOSE')+'" class="close">X</div><div class="clear"></div></div><div class="popup_content"></div></div></div>');
         me.obj = $('#'+config.name);
         
         me.buildBottom();

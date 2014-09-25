@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
+
 function InteractivePlayer(id, options) {
     var me = this;
     
@@ -296,7 +297,7 @@ function InteractivePlayer(id, options) {
         // Handle an optional return link
         if(options['general']['returnLink']) {
 
-            me.navigation.addControl('<button id="returnVideo"><span>'+options['general']['returnText']+'</span></button>');
+            me.navigation.addControl('<button id="returnVideo" title="'+_t('RETURN_MAIN_VIDEO')+'"><span>'+_t('RETURN_MAIN_VIDEO')+'</span></button>');
             $('#returnVideo').click(function() {
                 document.location = options['general']['returnLink'];
                 return false;
@@ -509,7 +510,6 @@ function InteractivePlayer(id, options) {
             
             var width = $(window).width();
             var height = $(window).height();
-//            alert(width+':'+height);
 
             $('#playerContainer').css({
                 'width': '1px',

@@ -1,6 +1,6 @@
 YUI := ~/yuicompressor-2.4.8.jar
 
-FILES := site.min iplayer.min hotspot.min pulsar.min popup.min navigation.min map.min finalPopup.min lib/jquery.quickfit.min lib/jquery.ui.touch-punch.min lib/ios-orientationchange-fix.min
+FILES := site.min lang/lang.min lang/lang.en.min lang/lang.fr.min iplayer.min hotspot.min pulsar.min popup.min navigation.min map.min finalPopup.min lib/jquery.quickfit.min lib/jquery.ui.touch-punch.min lib/ios-orientationchange-fix.min
 
 all: iplayer.lib.js
 

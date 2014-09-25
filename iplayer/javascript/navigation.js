@@ -95,9 +95,9 @@ function Navigation(player, options) {
             if(options['general']['twitterHashtag'])
                 twitterLink += '&hashtags='+encodeURIComponent(options['general']['twitterHashtag']);
 
-            me.obj.find('.shares').append('<a target="_blank" title="Export cette vidéo" href="#" class="share export"><img src="/iplayer/images/export.png" alt="Exporter cette vidéo" /></a>');
-            me.obj.find('.shares').append('<a target="_blank" title="Partager cette vidéo sur Twitter" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter.png" alt="Partager sur Twitter" /></a>');
-            me.obj.find('.shares').append('<a target="_blank" title="Partager cette vidéo sur Facebook" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook.png" alt="Partager sur Facebook" /></a>');
+            me.obj.find('.shares').append('<a target="_blank" title="'+_t('EXPORT_VIDEO')+'" href="#" class="share export"><img src="/iplayer/images/export.png" alt="'+_t('EXPORT_VIDEO')+'" /></a>');
+            me.obj.find('.shares').append('<a target="_blank" title="'+_t('SHARE_TW')+'" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter.png" alt="'+_t('SHARE_TW')+'" /></a>');
+            me.obj.find('.shares').append('<a target="_blank" title="'+_t('SHARE_FB')+'" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook.png" alt="'+_t('SHARE_FB')+'" /></a>');
         }
         me.obj.append('<div class="clear"></div>');
         
@@ -146,7 +146,7 @@ function Navigation(player, options) {
                     'type':'html',
                     'hideBottom': true,
                     'noScroll': true,
-                    'leftContent': '<form><div id="exportField"><label for="exportWidth">Largeur (px): </label><input type="text" value="'+options['general']['width']+'" id="exportWidth" /><br /><br /><input type="checkbox" id="exportAutoplay"><label for="exportAutoplay">Démarrer automatiquement</label></div><textarea id="exportCode"></textarea></form>'
+                    'leftContent': '<form><div id="exportField"><label for="exportWidth">'+_t('EXPORT_WIDTH')+' (px): </label><input type="text" value="'+options['general']['width']+'" id="exportWidth" /><br /><br /><input type="checkbox" id="exportAutoplay"><label for="exportAutoplay">'+_t('EXPORT_AUTOPLAY')+'</label></div><textarea id="exportCode"></textarea></form>'
                 }, 
                 {
                     'name': function() { return 'exportPopup'; },

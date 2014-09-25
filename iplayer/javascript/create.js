@@ -324,7 +324,7 @@ function showPopupWindow(name) {
         width: 800,
         resizable: false,
         modal: true,
-        title: (name ? 'Modifier ' + name : 'Ajouter une popup'),
+        title: (name ? 'Edit ' + name : 'Add a popup'),
         open: function( event, ui ) {
         
             $('#popup_type').unbind('change').change(function() {
@@ -375,7 +375,7 @@ function showPopupWindow(name) {
         },
         buttons: [ 
             {
-                text: 'Tester', 
+                text: 'Test', 
                 click: function() { 
                     $('body').append('<div id="popuptest" class="video-js"></div>');
                 
@@ -403,13 +403,13 @@ function showPopupWindow(name) {
                 }
             },
             {
-                text: 'Enregistrer', 
+                text: 'Save', 
                 click: function() { 
                     $('#popup_form').submit();
                 }
             },
             {
-                text: 'Annuler', 
+                text: 'Cancel', 
                 click: function() { 
                     $(this).dialog( "close" ); 
                 }
@@ -423,7 +423,7 @@ function showFrameWindow(index) {
         width: 800,
         resizable: false,
         modal: true,
-        title: (index != -1 ? 'Modifier une image' : 'Ajouter une image'),
+        title: (index != -1 ? 'Modify a fram' : 'Add a frame'),
         open: function( event, ui ) {
             if(results_json['map'] == null)
                 results_json['map'] = {'frames': []};
@@ -455,13 +455,13 @@ function showFrameWindow(index) {
         },
         buttons: [ 
             {
-                text: 'Enregistrer', 
+                text: 'Save', 
                 click: function() { 
                     $('#frame_form').submit();
                 }
             },
             {
-                text: 'Annuler', 
+                text: 'Cancel', 
                 click: function() { 
                     $(this).dialog( "close" ); 
                 }

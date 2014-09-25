@@ -54,6 +54,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
     //<![CDATA[
         var player_options = __CONFIG__;
 
+        iplayer_lang = player_options['general']['lang'];
+
         var _gaq = _gaq || [];
         if(player_options['general']['ga']) {
             _gaq.push(['_setAccount', player_options['general']['ga']]);
