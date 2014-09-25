@@ -89,9 +89,11 @@ function Map(config, player, options) {
 
         me.activeFrame = index;
 
-        me.obj.find('.mapfullimage').attr('src', config.frames[index].image);
-        me.width = config.frames[index].width;
-        me.height = config.frames[index].height;
+        if(me.obj.find('.mapfullimage').attr('src') != config.frames[index].image) {
+            me.obj.find('.mapfullimage').attr('src', config.frames[index].image);
+            me.width = config.frames[index].width;
+            me.height = config.frames[index].height;
+        }
 
         me.zoomTo(config.frames[index].hotspot.x, config.frames[index].hotspot.y, config.frames[index].zoom, true);
         
