@@ -88,7 +88,7 @@ function Map(config, player, options) {
         }
 
         me.activeFrame = index;
-
+        
         if(me.obj.find('.mapfullimage').attr('src') != config.frames[index].image) {
             me.obj.find('.mapfullimage').attr('src', config.frames[index].image);
             me.width = config.frames[index].width;
@@ -212,6 +212,8 @@ function Map(config, player, options) {
     }
     
     this.showHotspots = function() {
+        if(me.activeFrame == -1)
+            return;
         me.obj.find('.group_'+config.frames[me.activeFrame]['group']).show();
     }
     
@@ -339,7 +341,6 @@ function Map(config, player, options) {
     }
     
     this.build = function() {
-
         player.obj.append('<div id="__internal_map" class="map_overlay" style="display: none;"><div class="map"><div class="maptitle"><div title="Fermer" class="close">X</div><div class="title"></div><div class="clear"></div></div></div></div>');
         me.obj = $('#__internal_map');
 
