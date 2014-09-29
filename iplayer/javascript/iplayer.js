@@ -54,6 +54,8 @@ function InteractivePlayer(id, options) {
     this.isFromDomain = true;
     this.isFullScreenEnabled = false;
     
+    this.initialized = false;
+    
     
     this.viewState = {
         '20': false,
@@ -251,6 +253,12 @@ function InteractivePlayer(id, options) {
     }
     
     this.on_started = function() {
+        if(me.initialized) {
+            return;
+        }
+        me.initialized = true;
+
+    
         if(_gaq) {
             _gaq.push(
                 ['_trackEvent', options['general'].name, 'MainVideo-Run']
