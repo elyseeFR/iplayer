@@ -1,7 +1,10 @@
 iplayer
 =======
 
-The free interactive HTML5 player
+The free interactive HTML5 player.
+
+To see a fully working exemple: http://videos.elysee.fr/jep2014/index.html
+
 
 Information
 --------------------------------------
