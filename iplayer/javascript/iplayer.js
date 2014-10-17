@@ -80,16 +80,16 @@ function InteractivePlayer(id, options) {
         for(var i = 0; i < options['hotspots'].length; i++) {
             var hotspot = options['hotspots'][i];
             
-            if(hotspot.visible) {
+            if(hotspot['visible']) {
                 if(currentTime < hotspot.startsAt) {
-                    options['hotspots'][i].visible = false;
+                    options['hotspots'][i]['visible'] = false;
                     if(me.activeHotspots[hotspot.name]) {
                         me.activeHotspots[hotspot.name].destroy();
                         me.activeHotspots[hotspot.name] = null;
                     }
                 }
                 else if(currentTime >= hotspot.endsAt) {
-                    options['hotspots'][i].visible = false;
+                    options['hotspots'][i]['visible'] = false;
                     if(me.activeHotspots[hotspot.name]) {
                         me.activeHotspots[hotspot.name].destroy();
                         me.activeHotspots[hotspot.name] = null;
@@ -119,10 +119,10 @@ function InteractivePlayer(id, options) {
                     }
                 }
             }
-            else if(!hotspot.visible &&
+            else if(!hotspot['visible'] &&
                currentTime >= hotspot.startsAt &&
                currentTime < hotspot.endsAt) {
-                options['hotspots'][i].visible = true;
+                options['hotspots'][i]['visible'] = true;
                 me.activeHotspots[hotspot.name] = new Hotspot(hotspot, me, options);
                 if(seek) {
                     me.activeHotspots[hotspot.name].seek(currentTime);
