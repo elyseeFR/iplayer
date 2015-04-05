@@ -39,6 +39,8 @@ function InteractivePlayer(id, options) {
     
     this.getvars = null;
     this.start = 0;
+    this.startFinished = false;
+    this.startProgressPopup = null;
     this.initialHotspot = null;
     
     this.seeking = false;
@@ -184,6 +186,8 @@ function InteractivePlayer(id, options) {
             me.map.on_resize(width, height);
         if(me.finalPopup)
             me.finalPopup.on_resize(width, height);
+        if(me.startProgressPopup)
+            me.startProgressPopup.on_resize(width, height);
         
         Pulsar.on_resize(me);
 
@@ -238,12 +242,31 @@ function InteractivePlayer(id, options) {
     }
     
     this.checkBuffered = function() {
+        // This function handles the initial seek
+        // it makes sure the video is buffered
+        // up to me.start before running
+        
+        if(!me.startProgressPopup)
+            return;
+        
         var buffered = me.player.buffered();
+
+        // Update the progress
+        var max = 0;
+        for(var i = 0; i < buffered.length; i++) {
+            if(buffered.end(i) > max &&
+               buffered.end(i) < me.start) {
+                max = buffered.end(i);
+            }
+        }
+        $('#startProgressBar').progressbar('option', 'value', max);
+        
+        
         for(var i = 0; i < buffered.length; i++) {
             if(buffered.start(i) <= me.start &&
                buffered.end(i) >= me.start) {
-                // This forces the seek
-                me.player.currentTime(me.start);
+                me.startFinished = true;
+                me.startProgressPopup.on_close();
                 return;
             }
         }
@@ -342,10 +365,40 @@ function InteractivePlayer(id, options) {
                 return false;
             })
         }
+        
 
         if(me.start) {
+            me.startFinished = false;
             me.player.pause();
-            me.on_seek(me.start);
+            me.startProgressPopup = new Popup(
+            {
+                'name': 'startProgressPopup',
+                'title': _t('LOADING_WAIT'),
+                'type':'html',
+                'hideBottom': true,
+                'noScroll': true,
+                'leftContent': '<div id="startProgressBar"></div>'
+            }, 
+            {
+                'name': function() { return 'startProgressPopup'; },
+                'on_popupClosed': function() {
+                    if(me.startFinished) {
+                        // This forces the seek, me.start will 
+                        // be reinitialized on seeked event handler
+                        me.player.currentTime(me.start);
+                    }
+                    else {
+                        me.player.play();
+                        me.start = 0;
+                    }
+                    me.startProgressPopup = null;
+                }
+            },
+            me,
+            options);
+            $('#startProgressBar').progressbar({max: me.start});
+            
+            me.player.currentTime(me.start);
             me.checkBuffered();
         }
     }
@@ -426,7 +479,7 @@ function InteractivePlayer(id, options) {
                     // We are asked to handle the initial seek !
                     me.start = 0;
                     me.on_seek(currentTime);
-                    if(!me.player.paused())
+                    if(me.player.paused())
                         me.player.play();
                 }
                 else {

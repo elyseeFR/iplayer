@@ -189,6 +189,13 @@ box-shadow: 0 0 20px #000000;
     width: 100%;
 }
 
+@media (max-width: 800px) {
+    .video-js .popup_bottom {
+        display: none;
+    }
+}
+
+
 .video-js .popup_bottom .shares {
     float: right;
     padding: 7px;
@@ -501,11 +508,10 @@ border-radius: 10px;
 }
 
 
-.iPad .video-js .vjs-fullscreen-control {
-    display: none;
+.iPad .video-js .vjs-fullscreen-control,
+.vjs-fullscreen .popup .vjs-fullscreen-control {
+    visibility: hidden;
 }
-
-
 
 #exportPopup .popup_content {
     font-size: 20px;
@@ -524,5 +530,10 @@ border-radius: 10px;
     width: 98%;
     font-size: 30px;
     padding: 10px;
+}
+
+#startProgressBar {
+    margin-top: 8%;
+    height: 20%;
 }
 

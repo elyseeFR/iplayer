@@ -142,7 +142,7 @@ function Navigation(player, options) {
             me._exportPopup = new Popup(
                 {
                     'name': 'exportPopup',
-                    'title': 'Exporter la vidéo',
+                    'title': _t('EXPORT_VIDEO'),
                     'type':'html',
                     'hideBottom': true,
                     'noScroll': true,
