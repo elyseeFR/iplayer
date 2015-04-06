@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vidéo interactive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+  
+  <link href="http://videos.elysee.fr/iplayer/css/video-js.css" rel="stylesheet" type="text/css">
+  <link href="http://videos.elysee.fr/iplayer/css/iplayer.lib.css" rel="stylesheet" type="text/css">
+  <link href="iplayer.css" rel="stylesheet" type="text/css">
+
+  <script src="http://videos.elysee.fr/iplayer/javascript/lib/modernizr.min.js"></script>
+  <script src="http://videos.elysee.fr/iplayer/javascript/lib/video.js"></script>
+  <script src="http://videos.elysee.fr/iplayer/javascript/iplayer.lib.js"></script>
+  <script src="http://videos.elysee.fr/iplayer/javascript/lib/bjqs-1.3.min.js"></script>
+  <script src="http://videos.elysee.fr/iplayer/javascript/lib/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script>
+    videojs.options.flash.swf = "http://videos.elysee.fr/iplayer/video-js.swf";
+  </script>
+</head>
+<body class="player">
+    <div id="playerContainer">
+        <video id="main_video" class="video-js vjs-default-skin" controls preload="auto" width="960" height="400" poster="/example/poster.jpg">
+            <source src="/example/oceans.mp4" type="video/mp4" />
+            <source src="/example/oceans.webm" type="video/webm" />
+            
+            	
+        </video>
+    </div>
+    <script type="text/javascript">
+    //<![CDATA[
+        var player_options = {"pulsar":{"duration":"3000","maxWidth":"60","numberCircles":"2","borderColor":"#000000","borderSize":"2","fillColor":"#ffffff"},"general":{"name":"Dolphin","logo":"/example/dolphin.png","logoLink":"http://en.wikipedia.org/wiki/Dolphin","shareLink":"http://en.wikipedia.org/wiki/Dolphin","shareText":"I love dolphins !","twitterVia":"wikipedia","twitterHashtag":"iplayer","ga":"","width":960,"height":400,"lang":"en"},"hotspots":[{"moves":[{"startsAt":0.91,"endsAt":1.62,"x1":486,"y1":98,"x2":418,"y2":134},{"startsAt":1.62,"endsAt":4.04,"x1":418,"y1":134,"x2":470,"y2":207},{"startsAt":4.04,"endsAt":4.63,"x1":470,"y1":207,"x2":522,"y2":277}],"name":"Seagull","target":"popup","link":"popup_Seagull","tooltip":"Seagull","tooltipTime":5,"startsAt":0.91,"endsAt":4.63,"tooltipVisible":true,"image":"pulsar","visible":false},{"moves":[{"startsAt":13.74,"endsAt":16.14,"x1":735,"y1":283,"x2":629,"y2":124},{"startsAt":16.14,"endsAt":18.78,"x1":629,"y1":124,"x2":629,"y2":124}],"name":"Dolphin","target":"popup","link":"popup_Dolphin","tooltip":"Dolphin","tooltipTime":5,"startsAt":13.74,"endsAt":18.78,"tooltipVisible":true,"image":"pulsar","visible":false}],"popups":[{"name":"popup_Seagull","title":"Seagull","type":"mixed","leftType":"picture","leftContent":"/example/seagull.jpg","rightContent":"Gulls or seagulls are seabirds of the family Laridae in the sub-order Lari. They are most closely related to the terns (family Sternidae) and only distantly related to auks, skimmers, and more distantly to the waders. Until the twenty-first century most gulls were placed in the genus Larus, but this arrangement is now known to be polyphyletic, leading to the resurrection of several genera. An older name for gulls is mew, cognate with German \"Möwe\", Danish \"måge\", Dutch \"meeuw\" and French \"mouette\"; this term can still be found in certain regional dialects."},{"name":"popup_Dolphin","title":"Dolphins","type":"video","videoWidth":"560","videoHeight":"315","autoClose":false,"leftType":"","leftContent":"<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Bo_f8mV5khg\" frameborder=\"0\" allowfullscreen></iframe>","rightContent":""}],"map":{"frames":[{"title":"Pacific Ocean","image":"/example/World_Ocean_Map.png","width":"4767","height":"2387","group":"group1","startsAt":"0","zoom":"4","hotspot":{"x":"252","y":"747","target":"_blank","link":"http://en.wikipedia.org/wiki/Pacific_Ocean","image1":"/iplayer/images/circle-black.png","image2":"/iplayer/images/circle-red.png","borderSize":"2","borderColor1":"#000000","borderColor2":"#ff0000","fillColor1":"#ffffff","fillColor2":"#ff0000"}},{"title":"Atlantic Ocean","image":"","width":"","height":"","group":"","startsAt":"10","zoom":"3","hotspot":{"x":"1492","y":"767","target":"_blank","link":"http://en.wikipedia.org/wiki/Atlantic_Ocean","image1":"","image2":"","borderSize":"","borderColor1":"","borderColor2":"","fillColor1":"","fillColor2":""}}],"title":"Oceans map"}};
+
+        var _gaq = _gaq || [];
+        if(player_options['general']['ga']) {
+            _gaq.push(['_setAccount', player_options['general']['ga']]);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        }
+
+        var player = new InteractivePlayer('main_video', player_options);
+    //]]>
+    </script>
+</body>
+</html>
+
