@@ -42,6 +42,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
   <script src="javascript/hotspot.js"></script>
   <script src="javascript/pulsar.js"></script>
   <script src="javascript/popup.js"></script>
+  <script src="javascript/lang/lang.js"></script>
+  <script src="javascript/lang/lang.fr.js"></script>
+  <script src="javascript/lang/lang.en.js"></script>
 
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
@@ -66,6 +69,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
             <form action="#" method="get" id="general_form">
                 <p>
                     <label for="name">Projet Name : </label> <input id="name" name="name" value="" />
+                </p>
+                <p>
+                    <label for="lang">Language : </label> <select id="lang" name="lang"><option value="en">English</option><option value="fr">French</option></select>
                 </p>
                 <p>
                     <input name="autoplay" id="autoplay" value="0" type="checkbox"/> <label for="autoplay"> Autoplay ?</label>
@@ -182,7 +188,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
             <textarea id="template"></textarea>
         </div>
 
-        <h3>Save project</h3>
+        <h3>Load and save project</h3>
         <div>
             <textarea id="projectJSON"></textarea>
             <button id="loadProjectJSON">Load</button>
@@ -192,8 +198,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
     <div id="windowHotspot" style="display: none;">
         <form action="#" method="get" id="hotspot_form">
             <div id="video_container"></div>
+            <p><small><b>SHIFT + Click</b> to add a move</small></p>
+            <p><small><b>SHIFT + Left/Right arrow</b> to move a few frames in the video</small></p>
+            <hr />
             <p>
                 <label for="hotspot_name">Name : </label> <input id="hotspot_name" name="hotspot_name" value="" />
+                <br />
+                <i><small>Make sure nothing else has the same name (popup, map, etc.)</small></i>
             </p>
             <p>
                 <label for="hotspot_target">Target type : </label> <select id="hotspot_target" name="hotspot_target">
@@ -226,6 +237,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
         <form action="#" method="get" id="popup_form">
             <p>
                 <label for="popup_name">Name : </label> <input id="popup_name" name="popup_name" value="" />
+                <br />
+                <i><small>Make sure nothing else has the same name (hotspot, map, etc.)</small></i>
             </p>
             <p>
                 <label for="popup_title">Title : </label> <input id="popup_title" name="popup_title" value="" />

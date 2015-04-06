@@ -5,6 +5,7 @@ The free interactive HTML5 player.
 
 To see a fully working exemple: http://videos.elysee.fr/jep2014/index.html
 
+There is an example project in the "example" directory. You can use the basic progect manager located in "iplayer/create.html" to load the "exemple/project.txt" project file.
 
 Information
 --------------------------------------
