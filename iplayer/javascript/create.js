@@ -122,7 +122,7 @@ function get_form(id) {
 
 function load_form(id, values) {
     for(var name in values) {
-        $(id).find('input [name="'+name+'"]').val(values[name]);
+        $(id).find('input[name="'+name+'"]').val(values[name]);
     }
 }
 
@@ -239,13 +239,12 @@ function load_frame(frame) {
 
 function showHotspotWindow(name) {
     var iplayer = null;
-    var testing = false;
     
     $('#windowHotspot').dialog({
         width: 'auto',
         resizable: false,
         modal: true,
-        title: (name ? 'Modifier ' + name : 'Ajouter un hotspot'),
+        title: (name ? 'Edit ' + name : 'Add a hotspot'),
         open: function( event, ui ) {
             var index = -1;
             if(videoTag) {
@@ -289,17 +288,15 @@ function showHotspotWindow(name) {
             {
                 text: 'Tester', 
                 click: function() { 
-                    if(testing) {
-                        testing = false;
+                    var moves = parse_moves();
+                    var tc = moves[0].startsAt - 3 > 0 ? moves[0].startsAt - 3 : 0;
+                    if(iplayer.testing) {
+                        iplayer.stopTest(tc);
                         $('#main_video').removeClass('testplayer');
-                        iplayer.stopTest();
                     }
                     else {
-                        testing = true;
                         $('#main_video').addClass('testplayer');
-                        iplayer.test();
-                        var moves = parse_moves();
-                        iplayer.player.currentTime(moves[0].startsAt - 3);
+                        iplayer.test(tc);
                     }
                 }
             },
@@ -423,7 +420,7 @@ function showFrameWindow(index) {
         width: 800,
         resizable: false,
         modal: true,
-        title: (index != -1 ? 'Modify a fram' : 'Add a frame'),
+        title: (index != -1 ? 'Modify a frame' : 'Add a frame'),
         open: function( event, ui ) {
             if(results_json['map'] == null)
                 results_json['map'] = {'frames': []};
@@ -494,6 +491,9 @@ function loadPopups() {
 
 function loadFrames() {
     $('#frames ol').html('');
+    
+    if(!results_json['map']['frames'])
+        return;
 
     for(var i = 0; i < results_json['map']['frames'].length; i++) {
         $('#frames ol').append('<li data-index="'+i+'">'+results_json['map']['frames'][i]['title']+'</li>')
@@ -595,14 +595,17 @@ $(document).ready(function() {
             results_json['map'] = {'frames': []};
             
         results_json['map']['title'] = $('#map_title').val();
-        results_json['map']['width'] = $('#map_width').val();
-        results_json['map']['height'] = $('#map_height').val();
+        
+        updateTemplate('__CONFIG__');
         return false;
     });
     
     $('#loadProjectJSON').click(function() {
         project = JSON.parse($('#projectJSON').val());
         results_json = project['__CONFIG__'];
+        
+        load_form('#general_form', results_json['general']);
+        load_form('#pulsar_form', results_json['pulsar']);
 
         $('#video_width').val(project['__WIDTH__']);
         $('#video_height').val(project['__HEIGHT__']);
@@ -628,8 +631,6 @@ $(document).ready(function() {
         }
         
         
-        load_form('#general_form', results_json['general']);
-        load_form('#pulsar_form', results_json['pulsar']);
         
         $('#general_form').submit();
         $('#pulsar_form').submit();

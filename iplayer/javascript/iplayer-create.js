@@ -149,12 +149,16 @@ function InteractivePlayer(id, options) {
         
     }
     
-    this.test = function() {
+    this.test = function(tc) {
         me.testing = true;
+        me.player.currentTime(tc);
+        me.play();
     }
     
-    this.stopTest = function() {
-        me.testing = fase;
+    this.stopTest = function(tc) {
+        me.testing = false;
+        me.pause();
+        me.player.currentTime(tc);
     }
     
     this.build = function() {
