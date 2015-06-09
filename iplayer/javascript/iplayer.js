@@ -36,9 +36,11 @@ function InteractivePlayer(id, options) {
     this.sizeFactorHeight = 1;
     
     this.activeHotspots = {};
+    this.openedHotspot = '';
     
     this.getvars = null;
     this.start = 0;
+    this.playbackReady = false;
     this.startFinished = false;
     this.startProgressPopup = null;
     this.initialHotspot = null;
@@ -241,39 +243,6 @@ function InteractivePlayer(id, options) {
         document.location = link;
     }
     
-    this.checkBuffered = function() {
-        // This function handles the initial seek
-        // it makes sure the video is buffered
-        // up to me.start before running
-        
-        if(!me.startProgressPopup)
-            return;
-        
-        var buffered = me.player.buffered();
-
-        // Update the progress
-        var max = 0;
-        for(var i = 0; i < buffered.length; i++) {
-            if(buffered.end(i) > max &&
-               buffered.end(i) < me.start) {
-                max = buffered.end(i);
-            }
-        }
-        $('#startProgressBar').progressbar('option', 'value', max);
-        
-        
-        for(var i = 0; i < buffered.length; i++) {
-            if(buffered.start(i) <= me.start &&
-               buffered.end(i) >= me.start) {
-                me.startFinished = true;
-                me.startProgressPopup.on_close();
-                return;
-            }
-        }
-        setTimeout(function() {
-            me.checkBuffered();
-        }, 100);
-    }
     
     this.on_started = function() {
         if(me.initialized) {
@@ -342,7 +311,7 @@ function InteractivePlayer(id, options) {
         // Handle iframe fullscreen
         if(!me.isFullScreenEnabled) {
             $('#main_video > .vjs-control-bar .vjs-fullscreen-control').click(function() {
-                me.player.pause();
+                me.pause();
                 
                 var uri = setQueryVariables(document.location, 'start', parseInt(me.player.currentTime()));
                 uri = setQueryVariables(uri, 'hotspot', '');
@@ -366,10 +335,24 @@ function InteractivePlayer(id, options) {
             })
         }
         
-
+        if(me.playbackReady) {
+            me.on_playbackReady();
+        }
+        else {
+            var cb = function() {
+                if(me.playbackReady)
+                    me.on_playbackReady();
+                else
+                    setTimeout(cb, 100);
+            }
+            setTimeout(cb, 100);
+        }
+    }
+    
+    this.on_playbackReady = function() {
         if(me.start) {
+            me.pause();
             me.startFinished = false;
-            me.player.pause();
             me.startProgressPopup = new Popup(
             {
                 'name': 'startProgressPopup',
@@ -383,21 +366,56 @@ function InteractivePlayer(id, options) {
                 'name': function() { return 'startProgressPopup'; },
                 'on_popupClosed': function() {
                     if(me.startFinished) {
-                        // This forces the seek, me.start will 
-                        // be reinitialized on seeked event handler
                         me.player.currentTime(me.start);
                     }
-                    else {
-                        me.player.play();
-                        me.start = 0;
-                    }
+                    if(me.initialHotspot || me.openedHotspot)
+                        me.pause();
+                    else
+                        me.play();
+                    me.start = 0;
                     me.startProgressPopup = null;
                 }
             },
             me,
             options);
-            $('#startProgressBar').progressbar({max: me.start});
             
+            me.checkBuffered = function() {
+                // This function handles the initial seek
+                // it makes sure the video is buffered
+                // up to me.start before running
+                
+                if(!me.startProgressPopup)
+                    return;
+                
+                var buffered = me.player.buffered();
+
+                // Update the progress
+                var max = 0;
+                for(var i = 0; i < buffered.length; i++) {
+                    if(buffered.end(i) > max &&
+                       buffered.end(i) < me.start) {
+                        max = buffered.end(i);
+                    }
+                }
+                $('#startProgressBar').progressbar('option', 'value', max);
+                
+                
+                for(var i = 0; i < buffered.length; i++) {
+                    if(buffered.start(i) <= me.start &&
+                       buffered.end(i) >= me.start) {
+                        me.checkBuffered = null;
+                        me.startFinished = true;
+                        me.startProgressPopup.on_close();
+                        return;
+                    }
+                }
+                setTimeout(function() {
+                    me.checkBuffered();
+                }, 100);
+            };
+
+            
+            $('#startProgressBar').progressbar({max: me.start});
             me.player.currentTime(me.start);
             me.checkBuffered();
         }
@@ -473,18 +491,8 @@ function InteractivePlayer(id, options) {
 
             
             me.player.on('seeked', function() {
-
                 var currentTime = me.player.currentTime();
-                if(me.start) {
-                    // We are asked to handle the initial seek !
-                    me.start = 0;
-                    me.on_seek(currentTime);
-                    if(me.player.paused())
-                        me.player.play();
-                }
-                else {
-                    me.on_seek(currentTime);
-                }
+                me.on_seek(currentTime);
                 me.seeking = false;
             });
 
@@ -520,6 +528,10 @@ function InteractivePlayer(id, options) {
 
             me.player.on('firstplay', function() {
                 me.on_started();
+            });
+
+            me.player.on('loadedmetadata', function() {
+                me.playbackReady = true;
             });
 
             me.player.on('fullscreenchange', function() {
@@ -582,7 +594,6 @@ function InteractivePlayer(id, options) {
                 'height': 'auto'
             });
             
-            
             if(me.getvars['hotspot']) {
                 for(var i = 0; i < options['hotspots'].length; i++) {
                     var hotspot = options['hotspots'][i];
@@ -608,12 +619,16 @@ function InteractivePlayer(id, options) {
             }
             
             if(me.getvars['autoplay'] != '') {
-                if(parseInt(me.getvars['autoplay']) > 0)
-                    me.player.play();
+                if(parseInt(me.getvars['autoplay']) > 0) {
+                    me.autoplay = true;
+                    me.play();
+                }
             }
             else if(options['general']['autoplay'] != '') {
-                if(parseInt(options['general']['autoplay']) > 0)
-                    me.player.play();
+                if(parseInt(options['general']['autoplay']) > 0) {
+                    me.autoplay = true;
+                    me.play();
+                }
             }
            
         });

@@ -161,6 +161,7 @@ function Hotspot(config, player, options) {
     }
     
     this.on_popupClosed = function() {
+        player.openedHotspot = '';
         me.actionActivated = false;
         me.popup = null;
         if(!me.wasPaused)
@@ -246,7 +247,7 @@ function Hotspot(config, player, options) {
                     ['_trackEvent', options['general'].name, 'Hotspot-Click', config.name]
                 );
             }
-
+            player.openedHotspot = config.name;
             me.actionActivated = true;
 
             switch(config.target) {
