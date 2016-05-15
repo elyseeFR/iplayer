@@ -112,6 +112,14 @@ function Popup(config, hotspot, player, options) {
                                 maxHeight,
                                 mixed);
                 break;
+            case 'html':
+                container.find('iframe,object,embed').css({
+                        'width': maxWidth+'px',
+                        'height': maxHeight+'px',
+                        'margin-left': '0px',
+                        'margin-top': '0px'
+                    });
+                break;
         }
     }
     
@@ -241,7 +249,6 @@ function Popup(config, hotspot, player, options) {
             return false;
         });
                             
-
         switch(config.type) {
             case 'mixed':
                 me.buildMixed();
@@ -259,6 +266,12 @@ function Popup(config, hotspot, player, options) {
                         theme: 'dark-thick'
                     });
                 }
+                me.obj.find('.popup_content').find('iframe,object,embed').css({
+                        'width': me.contentWidth()+'px',
+                        'height': me.contentHeight()+'px',
+                        'margin-left': '0px',
+                        'margin-top': '0px'
+                    });
                 break;
 
             default:
