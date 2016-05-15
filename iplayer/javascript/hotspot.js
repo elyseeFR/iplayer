@@ -64,13 +64,13 @@ function Hotspot(config, player, options) {
         me.xOffset = player.VideoOffsets.x;
         me.yOffset = player.VideoOffsets.y;
         
-        if(me.pulsar) {
+        if(config.image == 'pulsar') {
             me.xOffset -= parseInt((me.pulsar.width() / 2));
             me.yOffset -= parseInt((me.pulsar.height() / 2));
         }
         else {
-            me.xOffset -= parseInt((me.obj.find('img').width() / 2));
-            me.yOffset -= parseInt((me.obj.find('img').height() / 2));
+            me.xOffset -= parseInt((config.image_w * player.sizeFactorWidth) / 2);
+            me.yOffset -= parseInt((config.image_h * player.sizeFactorHeight) / 2);
         }
     }
 
@@ -80,13 +80,13 @@ function Hotspot(config, player, options) {
             me.popup.on_resize(width, height);
         }
 
-        if(!me.pulsar) {
-            me.obj.find('img').attr({
-                'width': parseInt(config.image_w * player.sizeFactorWidth),
-                'height': parseInt(config.image_h * player.sizeFactorHeight)
+        if(config.image != 'pulsar') {
+            me.obj.find('img').css({
+                'width': parseInt(config.image_w * player.sizeFactorWidth)+'px',
+                'height': parseInt(config.image_h * player.sizeFactorHeight)+'px'
             });
         }
-
+        
         me._computeOffsets();
     }
     
@@ -147,8 +147,15 @@ function Hotspot(config, player, options) {
 
             // Move hotspot to the current position of the translation
             var move = config.moves[me.activeMove];
-            var x = move.x1 + ((move.x2 - move.x1) / (move.endsAt - move.startsAt)) * (currentTime - move.startsAt);
-            var y = move.y1 + ((move.y2 - move.y1) / (move.endsAt - move.startsAt)) * (currentTime - move.startsAt);
+            if(move.x1 == move.x2 &&
+               move.y1 == move.y2) {
+                var x = move.x1;
+                var y = move.y1;
+            }
+            else {
+                var x = move.x1 + ((move.x2 - move.x1) / (move.endsAt - move.startsAt)) * (currentTime - move.startsAt);
+                var y = move.y1 + ((move.y2 - move.y1) / (move.endsAt - move.startsAt)) * (currentTime - move.startsAt);
+            }
             me.obj.css(me._getPosition(x, y));
 
             // Run animation
@@ -221,13 +228,13 @@ function Hotspot(config, player, options) {
             me.pulsar = new Pulsar({}, me, player);
         }
         else {
-            me.obj.find('.hotspot_container').append('<img src="'+config.image+'" width="'+(parseInt(config.image_w * player.sizeFactorWidth))+'" height="'+(parseInt(config.image_h * player.sizeFactorHeight))+'" alt="" />');
+            me.obj.find('.hotspot_container').append('<img src="'+config.image+'" style="width: '+(parseInt(config.image_w * player.sizeFactorWidth))+'px;height: '+(parseInt(config.image_h * player.sizeFactorHeigh))+'px;" alt="" />');
         }
         if(config.tooltip) {
             me.obj.append('<span class="tooltip">'+config.tooltip+'</span>');
         }
 
-        me._computeOffsets(player.player.width(), player.player.height());
+        me._computeOffsets();
 
         // Move object at the begining of the translation
         me.obj.css(me._getPosition(config.moves[0].x1, config.moves[0].y1));
