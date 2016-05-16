@@ -68,7 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
             })();
         }
 
-        var player = new InteractivePlayer('main_video', player_options);
+        window.iplayer = new InteractivePlayer('main_video', player_options);
     //]]>
     </script>
 </body>
