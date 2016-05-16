@@ -174,12 +174,17 @@ box-shadow: 0 0 20px #000000;
     padding: 1em;
     color: #333;
     font-size: 16px;
+    text-align: justify;
 }
 
 .video-js .popup .leftContainer {
     float: left;
     margin-right: 17px;
     margin-bottom: 17px;
+}
+
+.video-js .popup_content li {
+    list-style-position: inside;
 }
 
 .video-js .popup_bottom {
@@ -535,5 +540,13 @@ border-radius: 10px;
 #startProgressBar {
     margin-top: 8%;
     height: 20%;
+}
+
+
+.video-js .vjs-subtitles,
+.video-js .vjs-captions,
+.video-js .vjs-subtitles *,
+.video-js .vjs-captions * {
+    font-size: 1.4em;
 }
 
