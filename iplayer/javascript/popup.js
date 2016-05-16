@@ -224,6 +224,11 @@ function Popup(config, hotspot, player, options) {
                 );
             }
         });
+
+        // If there is a Twitter link
+        if(window.twttr) {
+            twttr.widgets.load(me.obj.find('.popup_bottom').get(0));
+        }
     }
 
     this.build = function() {
@@ -283,6 +288,10 @@ function Popup(config, hotspot, player, options) {
                                 false);
                 me.autoFit();
                 break;
+        }
+        // If there is a Twitter link
+        if(window.twttr) {
+            twttr.widgets.load(me.obj.find('.popup_content').get(0));
         }
     }
     

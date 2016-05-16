@@ -233,6 +233,11 @@ function Hotspot(config, player, options) {
         if(config.tooltip) {
             me.obj.append('<span class="tooltip">'+config.tooltip+'</span>');
         }
+        
+        // If there is a Twitter link
+        if(window.twttr) {
+            twttr.widgets.load(me.obj.get(0));
+        }
 
         me._computeOffsets();
 
