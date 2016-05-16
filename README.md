@@ -98,6 +98,8 @@ Each **hotspot** is an object, configured as follow:
 - **image**, the type of pulsar to display:
 	- **pulsar** to use the default pulsar configured for the whole project.
 	- **an url** to dispay an image for this hotspot.
+- **image_w**, the width of the image in **image**.
+- **image_h**, the height of the image in **image**.
 
 Configure "popups"
 --------------------------------------
