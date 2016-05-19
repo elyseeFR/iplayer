@@ -42,6 +42,8 @@ function Hotspot(config, player, options) {
     }
             
     this.destroy = function() {
+        if(config['onBeforeHide'] && window[config['onBeforeHide']])
+            window[config['onBeforeHide']](player, player.player.currentTime(), me.obj, config);
         if(me.popup) {
             me.popup.destroy();
             me.popup = null;
@@ -233,9 +235,11 @@ function Hotspot(config, player, options) {
         if(config.tooltip) {
             me.obj.append('<span class="tooltip">'+config.tooltip+'</span>');
         }
+        if(config['onBeforeShow'] && window[config['onBeforeShow']])
+            window[config['onBeforeShow']](player, player.player.currentTime(), me.obj, config);
         
         // If there is a Twitter link
-        if(window.twttr) {
+        if(window.twttr && twttr && twttr.widgets) {
             twttr.widgets.load(me.obj.get(0));
         }
 
@@ -261,6 +265,9 @@ function Hotspot(config, player, options) {
             }
             player.openedHotspot = config.name;
             me.actionActivated = true;
+
+            if(config['onClick'] && window[config['onClick']])
+                window[config['onClick']](player, player.player.currentTime(), me.obj, config);
 
             switch(config.target) {
                 case 'popup':
