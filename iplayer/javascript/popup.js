@@ -208,25 +208,22 @@ function Popup(config, hotspot, player, options) {
             
         me.obj.find('.popup_bottom .shares').append('<a target="_blank" title="'+_t('SHARE_FB')+'" href="'+facebookLink+'" class="share facebook"><img src="/iplayer/images/facebook.png" alt="'+_t('SHARE_FB')+'" /></a>');
         me.obj.find('.popup_bottom .shares').append('<a target="_blank" title="'+_t('SHARE_TW')+'" href="'+twitterLink+'" class="share twitter"><img src="/iplayer/images/twitter.png" alt="'+_t('SHARE_TW')+'" /></a>');
-
-        me.obj.find('.popup_bottom a.twitter').click(function() {
-            if(_gaq) {
+        
+        if(_gaq) {
+            me.obj.find('.popup_bottom a.twitter').click(function() {
                 _gaq.push(
                     ['_trackEvent', options['general'].name, 'Popup-ClickTwitter', config.name]
                 );
-            }
-        });
-        
-        me.obj.find('.popup_bottom a.facebook').click(function() {
-            if(_gaq) {
+            });            
+            me.obj.find('.popup_bottom a.facebook').click(function() {
                 _gaq.push(
                     ['_trackEvent', options['general'].name, 'Popup-ClickFacebook', config.name]
                 );
-            }
-        });
+            });
+        }
 
         // If there is a Twitter link
-        if(window.twttr) {
+        if(window.twttr && twttr && twttr.widgets) {
             twttr.widgets.load(me.obj.find('.popup_bottom').get(0));
         }
     }
@@ -290,7 +287,7 @@ function Popup(config, hotspot, player, options) {
                 break;
         }
         // If there is a Twitter link
-        if(window.twttr) {
+        if(window.twttr && twttr && twttr.widgets) {
             twttr.widgets.load(me.obj.find('.popup_content').get(0));
         }
     }
