@@ -198,7 +198,7 @@ function Map(config, player, options) {
                     return false;
 
                 case 'timecode':
-                    player.player.currentTime($(this).data('link'));
+                    player.currentTime($(this).data('link'));
                     setTimeout(function() {
                         me.hide();
                     }, 500);
