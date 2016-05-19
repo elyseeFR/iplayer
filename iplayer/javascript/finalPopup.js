@@ -137,8 +137,8 @@ function FinalPopup(options, player) {
     }
         
     this.on_close = function() {
-        player.player.currentTime(0);
-        player.player.play();
+        player.currentTime(0);
+        player.play();
         me.obj.remove();
     }
     

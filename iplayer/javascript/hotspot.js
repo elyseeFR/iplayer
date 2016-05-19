@@ -43,7 +43,7 @@ function Hotspot(config, player, options) {
             
     this.destroy = function() {
         if(config['onBeforeHide'] && window[config['onBeforeHide']])
-            window[config['onBeforeHide']](player, player.player.currentTime(), me.obj, config);
+            window[config['onBeforeHide']](player, player.currentTime(), me.obj, config);
         if(me.popup) {
             me.popup.destroy();
             me.popup = null;
@@ -236,7 +236,7 @@ function Hotspot(config, player, options) {
             me.obj.append('<span class="tooltip">'+config.tooltip+'</span>');
         }
         if(config['onBeforeShow'] && window[config['onBeforeShow']])
-            window[config['onBeforeShow']](player, player.player.currentTime(), me.obj, config);
+            window[config['onBeforeShow']](player, player.currentTime(), me.obj, config);
         
         // If there is a Twitter link
         if(window.twttr && twttr && twttr.widgets) {
@@ -267,7 +267,7 @@ function Hotspot(config, player, options) {
             me.actionActivated = true;
 
             if(config['onClick'] && window[config['onClick']])
-                window[config['onClick']](player, player.player.currentTime(), me.obj, config);
+                window[config['onClick']](player, player.currentTime(), me.obj, config);
 
             switch(config.target) {
                 case 'popup':
@@ -285,7 +285,7 @@ function Hotspot(config, player, options) {
                     return false;
 
                 case 'timecode':
-                    player.player.currentTime(config.link);
+                    player.currentTime(config.link);
                     return false;
             }
 

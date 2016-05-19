@@ -227,6 +227,13 @@ function InteractivePlayer(id, options) {
         me.player.play();
     }
     
+    this.currentTime = function() {
+        if(arguments && arguments.length)
+            return player.currentTime(arguments[0]);
+        else
+            return player.currentTime();
+    }
+    
     this.loadVideo = function(link) {
         var uri = parseUri(document.location);
         var tc = parseInt(me.player.currentTime());
