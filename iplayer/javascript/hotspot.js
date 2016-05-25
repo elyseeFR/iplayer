@@ -225,7 +225,12 @@ function Hotspot(config, player, options) {
             if(config.target)
                 me.obj.attr('target', config.target);
         }
+
         
+        if(config['onBeforeShow'] && window[config['onBeforeShow']]) {
+            window[config['onBeforeShow']](player, player.currentTime(), me.obj, config);
+        }
+
         if(config.image == 'pulsar') {
             me.pulsar = new Pulsar({}, me, player);
         }
@@ -235,8 +240,6 @@ function Hotspot(config, player, options) {
         if(config.tooltip) {
             me.obj.append('<span class="tooltip">'+config.tooltip+'</span>');
         }
-        if(config['onBeforeShow'] && window[config['onBeforeShow']])
-            window[config['onBeforeShow']](player, player.currentTime(), me.obj, config);
         
         // If there is a Twitter link
         if(window.twttr && twttr && twttr.widgets) {

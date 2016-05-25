@@ -229,9 +229,9 @@ function InteractivePlayer(id, options) {
     
     this.currentTime = function() {
         if(arguments && arguments.length)
-            return player.currentTime(arguments[0]);
+            return me.player.currentTime(arguments[0]);
         else
-            return player.currentTime();
+            return me.player.currentTime();
     }
     
     this.loadVideo = function(link) {

@@ -339,9 +339,9 @@ function InteractivePlayer(id, options) {
     
     this.currentTime = function() {
         if(arguments && arguments.length)
-            return player.currentTime(arguments[0]);
+            return me.player.currentTime(arguments[0]);
         else
-            return player.currentTime();
+            return me.player.currentTime();
     }
     
     this.loadVideo = function(link) {
@@ -998,7 +998,12 @@ function Hotspot(config, player, options) {
             if(config.target)
                 me.obj.attr('target', config.target);
         }
+
         
+        if(config['onBeforeShow'] && window[config['onBeforeShow']]) {
+            window[config['onBeforeShow']](player, player.currentTime(), me.obj, config);
+        }
+
         if(config.image == 'pulsar') {
             me.pulsar = new Pulsar({}, me, player);
         }
@@ -1008,8 +1013,6 @@ function Hotspot(config, player, options) {
         if(config.tooltip) {
             me.obj.append('<span class="tooltip">'+config.tooltip+'</span>');
         }
-        if(config['onBeforeShow'] && window[config['onBeforeShow']])
-            window[config['onBeforeShow']](player, player.currentTime(), me.obj, config);
         
         // If there is a Twitter link
         if(window.twttr && twttr && twttr.widgets) {
