@@ -806,6 +806,8 @@ function Hotspot(config, player, options) {
     
     this.popup = null;
     this.pulsar = null;
+    this.window = null;
+    this.windowTimer = null;
 
     this.actionActivated = false;
     this.wasPaused = false;
@@ -993,7 +995,15 @@ function Hotspot(config, player, options) {
         me.obj = $('#'+config.name);
         
         var hasLink = false;
-        if(config.target != 'popup') {
+        if(config.target == 'popup') {
+            me.obj.attr('href', '#'+config.link);
+        }
+        else if(config.target == 'timecode') {
+            var url = setQueryVariables(document.location, 'start', config.target);
+            setQueryVariables(url, 'hotspot', '');
+            me.obj.attr('href', url);
+        }
+        else {
             me.obj.attr('href', config.link);
             if(config.target)
                 me.obj.attr('target', config.target);
@@ -1046,6 +1056,35 @@ function Hotspot(config, player, options) {
                 window[config['onClick']](player, player.currentTime(), me.obj, config);
 
             switch(config.target) {
+                case 'window':
+                    if(me.window) {
+                        me.window.close();
+                        me.window = null;
+                    }
+                    if(me.windowTimer) {
+                        clearInterval(me.windowTimer);
+                        me.windowTimer = null;
+                    }
+                    
+                    var width = 600;
+                    var height = 300;
+                    if(config['windowWidth'])
+                        width = config['windowWidth'];
+                    if(config['windowHeight'])
+                        height = config['windowHeight'];
+                    me.window = window.open(config.link, config.name, 'menubar=0,location=0,resizable=0,scrollbars=1,status=0,width='+width+',height='+height);
+                    if(me.window) {
+                        me.windowTimer = setInterval(function() {
+                            if(!me.window || me.window.closed) {
+                                clearInterval(me.windowTimer);
+                                me.windowTimer = null;
+                                me.window = null;
+                                window.focus();
+                                me.on_popupClosed();
+                                return;
+                            }
+                        }, 100);
+                    }
                 case 'popup':
                     for(var i = 0; i < options['popups'].length; i++) {
                         if(options['popups'][i].name != config.link)

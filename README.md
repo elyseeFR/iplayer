@@ -81,13 +81,15 @@ Each **hotspot** is an object, configured as follow:
 	- **x2** the destination X position, relative to **general['width'].
 	- **y2** the destination Y position, relative to **general['height'].
 - **target** the type of target, possible values:
-	- **popup** for an internal popup.
+	- **popup** for an internal HTML lightbox.
+	- **window** for a window popup.
 	- **_blank** a new browser window.
 	- **_top** the current top window.
-	- **video** another ilpayer project, the return information will be automatically added.
+	- **video** another iplayer project, the return information will be automatically added.
 	- **timecode** a time code in the current video.
 - **link** the link, value depends on **target** value:
 	- **target** is **popup**, the unique name of the popup.
+	- **target** is **window**, an URL.
 	- **target** is **_blank**, an URL.
 	- **target** is **_top**, an URL.
 	- **target** is **video**, an URL to another iplayer project, both projects must be hosted on the same domain.
@@ -95,6 +97,8 @@ Each **hotspot** is an object, configured as follow:
 - **tooltipVisible**, 1 or 0 to activate/deactivate the display of the tooltip.
 - **tooltip** an optional text to display underneath the hotspot.
 - **tooltipTime** the length in seconds to display the tooltip for.
+- **windowWidth** when **target** is **window**, the width of the popup (default is 600px).
+- **windowHeight** when **target** is **window**, the height of the popup (default is 400px).
 - **image**, the type of pulsar to display:
 	- **pulsar** to use the default pulsar configured for the whole project.
 	- **an url** to dispay an image for this hotspot.
